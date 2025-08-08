@@ -2,13 +2,6 @@ import { LLM } from '../lib/index.js';
 import path from 'node:path';
 import os from 'node:os';
 
-function sleepSync(ms) {
-  const start = Date.now();
-  while (Date.now() - start < ms) {
-    // 空循环，CPU 全占用
-  }
-}
-
 async function testBenchmark() {
   const llm = new LLM(path.join(os.homedir(), ".llm/Qwen3-0.6B-MNN/"));
 
@@ -27,7 +20,7 @@ async function testBenchmark() {
 
 async function runAllTests() {
   try {
-    testBenchmark()
+    await testBenchmark()
 
     console.log('\n所有测试完成!');
   } catch (error) {
