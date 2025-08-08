@@ -1,4 +1,6 @@
 import { LLM } from '../lib/index.js';
+import path from 'node:path';
+import os from 'node:os';
 
 function sleepSync(ms) {
   const start = Date.now();
@@ -8,7 +10,7 @@ function sleepSync(ms) {
 }
 
 async function testBenchmark() {
-  const llm = new LLM("/Users/zxfishhack/.llm/Qwen3-0.6B-MNN/");
+  const llm = new LLM(path.join(os.homedir(), ".llm/Qwen3-0.6B-MNN/"));
 
   llm.load();
 
