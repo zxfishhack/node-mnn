@@ -4,6 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "description": "MNN node module",
   "main": "lib/index.js",
   "engines": {

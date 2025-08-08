@@ -1,4 +1,4 @@
-const { LLM } = require('../lib');
+import { LLM } from '../lib/index.js';
 
 function sleepSync(ms) {
   const start = Date.now();
@@ -7,16 +7,16 @@ function sleepSync(ms) {
   }
 }
 
-function testBenchmark() {
+async function testBenchmark() {
   const llm = new LLM("/Users/zxfishhack/.llm/Qwen3-0.6B-MNN/");
 
   llm.load();
 
-  const gen = llm.generate("今天天气真不错");
+  const gen = await llm.generateAsync("今天天气真不错");
 
   let resp = '';
 
-  for (const v of gen) {
+  for await (const v of gen) {
     resp += v;
   }
 

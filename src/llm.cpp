@@ -60,7 +60,19 @@ Napi::Value LLM::Generate(const Napi::CallbackInfo &info)
 
 Napi::Value LLM::GenerateAsync(const Napi::CallbackInfo &info)
 {
-    return Napi::Value();
+    Napi::Env env = info.Env();
+    std::shared_ptr<closable_deque> q(new closable_deque());
+    std::string prompt = info[0].As<Napi::String>();;
+
+    std::thread executor([this, q, prompt]() {
+        llm_->response(prompt, new std::ostream(q.get()));
+
+        q->close();
+    });
+
+    executor.detach();
+
+    return UnifiedStreamGenerator::CreateFromDeque(env, q, true);
 }
 
 void LLM::Init(Napi::Env env, Napi::Object exports) {
