@@ -1,0 +1,19 @@
+{
+  "name": "@378q/node-mnn",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "",
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp build",
+    "clean": "node-gyp clean",
+    "test": "node test/test.js"
+  },
+  "private": false
+}
