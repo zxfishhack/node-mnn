@@ -11,16 +11,16 @@
         "<!@(node -p \"require('node-addon-api').include\")",
         "<!(node -e \"console.log(require('@378q/mnn-prebuilt').getIncludePath())\")"
       ],
+      "libraries": [
+        "<!(node -e \"const config = require('@378q/mnn-prebuilt').getGypConfig(); console.log(config.libraries.join(' '));\")"
+      ],
+      "library_dirs": [
+        "<!(node -e \"console.log(require('@378q/mnn-prebuilt').getLibPath())\")"
+      ],
       "cflags!": [ "-fno-exceptions" ],
       "cflags_cc!": [ "-fno-exceptions" ],
       "conditions": [
         ["OS=='mac'", {
-          "libraries": [
-            "<!(node -e \"const config = require('@378q/mnn-prebuilt').getGypConfig(); console.log(config.libraries.join(' '));\")"
-          ],
-          "library_dirs": [
-            "<!(node -e \"console.log(require('@378q/mnn-prebuilt').getLibPath())\")"
-          ],
           "xcode_settings": {
             "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
             "CLANG_CXX_LIBRARY": "libc++",
@@ -31,24 +31,10 @@
           }
         }],
         ["OS=='win'", {
-          "libraries": [
-            "<!(node -e \"const config = require('@378q/mnn-prebuilt').getGypConfig(); console.log(config.libraries.join(' '));\")"
-          ],
-          "library_dirs": [
-            "<!(node -e \"console.log(require('@378q/mnn-prebuilt').getLibPath())\")"
-          ],
           "defines": [
             "WIN32_LEAN_AND_MEAN"
           ]
         }],
-        ["OS=='linux'", {
-          "libraries": [
-            "<!(node -e \"const config = require('@378q/mnn-prebuilt').getGypConfig(); console.log(config.libraries.join(' '));\")"
-          ],
-          "library_dirs": [
-            "<!(node -e \"console.log(require('@378q/mnn-prebuilt').getLibPath())\")"
-          ]
-        }]
       ],
       "msvs_settings": {
         "VCCLCompilerTool": { 

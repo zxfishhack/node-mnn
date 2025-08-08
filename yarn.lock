@@ -2,10 +2,29 @@
 # yarn lockfile v1
 
 
-"@378q/mnn-prebuilt@^3.2.2-alpha.3":
-  version "3.2.2-alpha.3"
-  resolved "https://registry.yarnpkg.com/@378q/mnn-prebuilt/-/mnn-prebuilt-3.2.2-alpha.3.tgz#11dbe7f3530a2a3fe188fa80e91f6039dd5b09fd"
-  integrity sha512-CjAlWn+zhm4vO+Oa2Of7Gzq3sUWORZdQNEtB/Y4BFfdo4Isv1heV9088eu/QpzOuNADf1IdswFCMc6XEPTCD/A==
+"@378q/mnn-darwin-universal@^3.2.2-alpha1":
+  version "3.2.2-alpha1"
+  resolved "https://registry.npmmirror.com/@378q/mnn-darwin-universal/-/mnn-darwin-universal-3.2.2-alpha1.tgz#8be056547e070550a78ce2fe02bf32969b5f35cf"
+  integrity sha512-aIYeR53rIlgtFGLQQmISSCCdI98CoP1TGMmyrXN6qW6msNq9thZKzSQ+MuE7glxvho68KDo2ri40w8Wce7XgjQ==
+
+"@378q/mnn-linux-x64@^3.2.2-alpha1":
+  version "3.2.2-alpha1"
+  resolved "https://registry.npmmirror.com/@378q/mnn-linux-x64/-/mnn-linux-x64-3.2.2-alpha1.tgz#b8dc6101047314351b738f0c54f13c4f236e2df1"
+  integrity sha512-MY7y4IKRTC5ClJfJov0M2usx8IjIvaNPT6gWOzeQJZT/UGGUsb3VjytnLugVbobkEA16U0jfU6CuswEitEzqOw==
+
+"@378q/mnn-prebuilt@^3.2.2-alpha.8":
+  version "3.2.2-alpha.8"
+  resolved "https://registry.npmmirror.com/@378q/mnn-prebuilt/-/mnn-prebuilt-3.2.2-alpha.8.tgz#bc8ba8d8c6377aa177e2e0cf72adc3eb2e99fd9e"
+  integrity sha512-bFBQw+p3rRE1+pz9WB00QZ9k4Fq99go1HcuXPRelMEkLu/tkTLZeED2Z3irMGPpLpk+cE1cu9jIDBZOgqwjaxA==
+  optionalDependencies:
+    "@378q/mnn-darwin-universal" "^3.2.2-alpha1"
+    "@378q/mnn-linux-x64" "^3.2.2-alpha1"
+    "@378q/mnn-win32-x64" "^3.2.2-alpha1"
+
+"@378q/mnn-win32-x64@^3.2.2-alpha1":
+  version "3.2.2-alpha1"
+  resolved "https://registry.npmjs.org/@378q/mnn-win32-x64/-/mnn-win32-x64-3.2.2-alpha1.tgz#e3979d7368df92b654a9617859ed445083f09168"
+  integrity sha512-fgUnmtcb3ZnY4gjZFlxdTqiBOClvyaGQ24Sn+mYrI9b3rWFavBkw47e4SF3QsgOHtqVdkVx7fDD38pLyPDXzzQ==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"

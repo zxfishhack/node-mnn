@@ -19,8 +19,8 @@
     "test": "node test/test.js"
   },
   "dependencies": {
-    "node-addon-api": "^8.5.0",
-    "@378q/mnn-prebuilt": "^3.2.2-alpha.3"
+    "@378q/mnn-prebuilt": "^3.2.2-alpha.8",
+    "node-addon-api": "^8.5.0"
   },
   "devDependencies": {
     "node-gyp": "^11.3.0"
