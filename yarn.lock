@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@378q/mnn-prebuilt@^3.2.2-alpha.2":
-  version "3.2.2-alpha.2"
-  resolved "https://registry.npmmirror.com/@378q/mnn-prebuilt/-/mnn-prebuilt-3.2.2-alpha.2.tgz#04100672b4e769903db7a54da019a451b80d1ec3"
-  integrity sha512-fysgPl7Nu4Q+v7RtV5pGcWaw6/kpFNtj0nFCV2vkcTyCUYOnHYfVoylDl+Kgid+fowfTzWHVGo6g1cFy6P8dww==
+"@378q/mnn-prebuilt@^3.2.2-alpha.3":
+  version "3.2.2-alpha.3"
+  resolved "https://registry.yarnpkg.com/@378q/mnn-prebuilt/-/mnn-prebuilt-3.2.2-alpha.3.tgz#11dbe7f3530a2a3fe188fa80e91f6039dd5b09fd"
+  integrity sha512-CjAlWn+zhm4vO+Oa2Of7Gzq3sUWORZdQNEtB/Y4BFfdo4Isv1heV9088eu/QpzOuNADf1IdswFCMc6XEPTCD/A==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"

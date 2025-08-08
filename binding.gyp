@@ -51,7 +51,10 @@
         }]
       ],
       "msvs_settings": {
-        "VCCLCompilerTool": { "ExceptionHandling": 1 }
+        "VCCLCompilerTool": { 
+          "ExceptionHandling": 1,
+          "AdditionalOptions": ["/utf-8"]
+        }
       }
     }
   ]

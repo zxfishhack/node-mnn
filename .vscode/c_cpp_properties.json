@@ -4,13 +4,12 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${NODE_ROOT_DIR}/include/node"
+                "${NODE_ROOT_DIR}/include/node",
+                "C:/Users/Fish/AppData/Local/node-gyp/Cache/22.18.0/include/node"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
-            "cppStandard": "c++14",
-            "intelliSenseMode": "macos-clang-arm64"
+            "cppStandard": "c++14"
         }
     ],
     "version": 4

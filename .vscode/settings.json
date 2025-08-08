@@ -56,6 +56,14 @@
         "vector": "cpp",
         "algorithm": "cpp",
         "condition_variable": "cpp",
-        "__config": "cpp"
+        "__config": "cpp",
+        "xstring": "cpp",
+        "list": "cpp",
+        "type_traits": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp",
+        "functional": "cpp",
+        "chrono": "cpp"
     }
 }
