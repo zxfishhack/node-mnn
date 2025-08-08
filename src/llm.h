@@ -12,5 +12,7 @@ private:
     Napi::Value Generate(const Napi::CallbackInfo& info);
     Napi::Value GenerateAsync(const Napi::CallbackInfo& info);
 private:
+    Napi::Value generate(const Napi::CallbackInfo& info, bool async);
+
     std::shared_ptr<MNN::Transformer::Llm> llm_;
 };

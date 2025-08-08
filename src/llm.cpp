@@ -4,6 +4,8 @@
 #include "closable_deque.h"
 #include "ss_generator.h"
 
+std::set<std::string> valid_role{"system", "user", "assistant"};
+
 LLM::LLM(const Napi::CallbackInfo& info)
     : Napi::ObjectWrap<LLM>(info)
     , llm_(nullptr)
@@ -42,37 +44,72 @@ Napi::Value LLM::Load(const Napi::CallbackInfo &info)
 
 Napi::Value LLM::Generate(const Napi::CallbackInfo &info)
 {
-    Napi::Env env = info.Env();
-    std::shared_ptr<closable_deque> q(new closable_deque());
-    std::string prompt = info[0].As<Napi::String>();;
-
-    std::thread executor([this, q, prompt]() {
-        llm_->response(prompt, new std::ostream(q.get()));
-
-        q->close();
-    });
-
-    executor.detach();
-
-    return UnifiedStreamGenerator::CreateFromDeque(env, q, false);
+    return generate(info, false);
 }
 
 
 Napi::Value LLM::GenerateAsync(const Napi::CallbackInfo &info)
 {
+    return generate(info, true);
+}
+
+Napi::Value LLM::generate(const Napi::CallbackInfo &info, bool async)
+{
     Napi::Env env = info.Env();
     std::shared_ptr<closable_deque> q(new closable_deque());
-    std::string prompt = info[0].As<Napi::String>();;
+    if (info.Length() < 1) {
+        Napi::TypeError::New(env, "prompt is required").ThrowAsJavaScriptException();
+        return env.Undefined();
+    }
+    if (info[0].IsString()) {
+        std::string prompt = info[0].As<Napi::String>();
 
-    std::thread executor([this, q, prompt]() {
-        llm_->response(prompt, new std::ostream(q.get()));
+        std::thread executor([this, q, prompt]() {
+            llm_->response(prompt, new std::ostream(q.get()));
 
-        q->close();
-    });
+            q->close();
+        });
 
-    executor.detach();
+        executor.detach();
+    } else if (info[0].IsArray()) {
+        Napi::Array arr = info[0].As<Napi::Array>();
+        MNN::Transformer::ChatMessages prompt;
+        for (uint32_t i=0; i<arr.Length(); i++) {
+            Napi::Value element = arr[i];
+            if (!element.IsObject()) {
+                Napi::TypeError::New(env, "prompt must be string or array of Message").ThrowAsJavaScriptException();
+                return env.Undefined();
+            }
+            Napi::Object obj = element.As<Napi::Object>();
+            if (!obj.Has("role") || !obj.Get("role").IsString()) {
+                Napi::TypeError::New(env, "prompt must be string or array of Message").ThrowAsJavaScriptException();
+                return env.Undefined();
+            }
+            std::string role = obj.Get("role").As<Napi::String>();
+            if (valid_role.find(role) == valid_role.end()) {
+                Napi::TypeError::New(env, "prompt must be string or array of Message").ThrowAsJavaScriptException();
+                return env.Undefined();
+            }
+            if (!obj.Has("message") || !obj.Get("message").IsString()) {
+                Napi::TypeError::New(env, "prompt must be string or array of Message").ThrowAsJavaScriptException();
+                return env.Undefined();
+            }
+            std::string message = obj.Get("message").As<Napi::String>();
+            prompt.push_back(MNN::Transformer::ChatMessage(role, message));
+        }
+        std::thread executor([this, q, prompt]() {
+            llm_->response(prompt, new std::ostream(q.get()));
 
-    return UnifiedStreamGenerator::CreateFromDeque(env, q, true);
+            q->close();
+        });
+
+        executor.detach();
+    } else {
+        Napi::TypeError::New(env, "prompt must be string or array of Message").ThrowAsJavaScriptException();
+        return env.Undefined();
+    }
+
+    return UnifiedStreamGenerator::CreateFromDeque(env, q, async);
 }
 
 void LLM::Init(Napi::Env env, Napi::Object exports) {

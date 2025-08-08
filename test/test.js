@@ -18,9 +18,38 @@ async function testBenchmark() {
   console.log(resp);
 }
 
+function testChatMessages() {
+  const llm = new LLM(path.join(os.homedir(), ".llm/Qwen3-0.6B-MNN/"));
+
+  llm.load();
+
+  const prompts = [
+    {
+      role: "system",
+      message: "将用户的所有输入都翻译成英文",
+    },
+    {
+      role: "user",
+      message: "今天天气真不错"
+    }
+  ]
+
+  const gen = llm.generate(prompts);
+
+  let resp = ''
+
+  for (const v of gen) {
+    resp += v
+  }
+
+  console.log(resp);
+}
+
 async function runAllTests() {
   try {
     await testBenchmark()
+
+    testChatMessages()
 
     console.log('\n所有测试完成!');
   } catch (error) {
