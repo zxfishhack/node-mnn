@@ -4,16 +4,25 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "",
+  "description": "MNN node module",
   "main": "lib/index.js",
   "engines": {
     "node": ">=22.18.0"
   },
+  "license": "Apache-2.0",
   "scripts": {
+    "configure": "node-gyp configure",
     "install": "node-gyp rebuild",
     "build": "node-gyp build",
     "clean": "node-gyp clean",
     "test": "node test/test.js"
   },
-  "private": false
+  "dependencies": {
+    "node-addon-api": "^8.5.0",
+    "@378q/mnn-prebuilt": "^3.2.2-alpha.2"
+  },
+  "devDependencies": {
+    "node-gyp": "^11.3.0"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

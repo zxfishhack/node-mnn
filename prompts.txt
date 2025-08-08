@@ -1,0 +1,3 @@
+Nan::Persistent<v8::Function> StreamGenerator::constructor;
+StreamGenerator::StreamGenerator(int count, int delay) 
+    : count_(count), delay_(delay), current_(0), running_(false) {}
