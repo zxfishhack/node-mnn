@@ -12,10 +12,10 @@
   resolved "https://registry.npmmirror.com/@378q/mnn-linux-x64/-/mnn-linux-x64-3.2.2-alpha1.tgz#b8dc6101047314351b738f0c54f13c4f236e2df1"
   integrity sha512-MY7y4IKRTC5ClJfJov0M2usx8IjIvaNPT6gWOzeQJZT/UGGUsb3VjytnLugVbobkEA16U0jfU6CuswEitEzqOw==
 
-"@378q/mnn-prebuilt@^3.2.2-alpha.8":
-  version "3.2.2-alpha.8"
-  resolved "https://registry.npmmirror.com/@378q/mnn-prebuilt/-/mnn-prebuilt-3.2.2-alpha.8.tgz#bc8ba8d8c6377aa177e2e0cf72adc3eb2e99fd9e"
-  integrity sha512-bFBQw+p3rRE1+pz9WB00QZ9k4Fq99go1HcuXPRelMEkLu/tkTLZeED2Z3irMGPpLpk+cE1cu9jIDBZOgqwjaxA==
+"@378q/mnn-prebuilt@^3.2.2-rc1":
+  version "3.2.2-rc1"
+  resolved "https://registry.yarnpkg.com/@378q/mnn-prebuilt/-/mnn-prebuilt-3.2.2-rc1.tgz#80d7444e34d71d3391db4ba206ac72101411d8b2"
+  integrity sha512-WpWqVz6655I8gqV/KYpleleOQjbLszikIkNFrzavOdCi5w2s61EQ5kYaRJeBCzjiwWVbCHSVe7ZvhP5CqZas6A==
   optionalDependencies:
     "@378q/mnn-darwin-universal" "^3.2.2-alpha1"
     "@378q/mnn-linux-x64" "^3.2.2-alpha1"

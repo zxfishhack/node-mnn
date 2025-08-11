@@ -19,6 +19,19 @@ Napi::Value LLM::Unload(const Napi::CallbackInfo &info)
     return Napi::Boolean::New(info.Env(), true);
 }
 
+Napi::Value LLM::Metrics(const Napi::CallbackInfo &info)
+{
+    auto env = info.Env();
+    auto ctx = llm_->getContext();
+    auto res = Napi::Object::New(env);
+    res.Set("prefill_tokens", Napi::Number::New(env, ctx->prompt_len));
+    res.Set("decode_tokens", Napi::Number::New(env, ctx->gen_seq_len));
+    res.Set("prefill_us", Napi::Number::New(env, ctx->prefill_us));
+    res.Set("decode_us", Napi::Number::New(env, ctx->decode_us));
+
+    return res;
+}
+
 Napi::Value LLM::Load(const Napi::CallbackInfo &info)
 {
     Napi::Env env = info.Env();
@@ -39,6 +52,7 @@ Napi::Value LLM::Load(const Napi::CallbackInfo &info)
       // 立即 return，让 JS 层看到这个异常
       return Napi::Boolean::New(info.Env(), false);
     }
+    llm_->set_config(std::string("{\"thread_num\": 16}"));
     llm_->load(); // 目前无法得知模型是否正确加载
     return Napi::Boolean::New(info.Env(), true);
 }
@@ -58,15 +72,23 @@ Napi::Value LLM::generate(const Napi::CallbackInfo &info, bool async)
 {
     Napi::Env env = info.Env();
     std::shared_ptr<closable_deque> q(new closable_deque());
+    int max_token = -1;
     if (info.Length() < 1) {
         Napi::TypeError::New(env, "prompt is required").ThrowAsJavaScriptException();
         return env.Undefined();
     }
+    if (info.Length() >= 2 && info[1].IsNumber()) {
+        max_token = info[1].As<Napi::Number>().Int32Value();
+        if (max_token < 0) {
+            max_token = -1;
+        } 
+    }
+
     if (info[0].IsString()) {
         std::string prompt = info[0].As<Napi::String>();
 
-        std::thread executor([this, q, prompt]() {
-            llm_->response(prompt, new std::ostream(q.get()));
+        std::thread executor([this, q, prompt, max_token]() {
+            llm_->response(prompt, new std::ostream(q.get()), "", max_token);
 
             q->close();
         });
@@ -98,8 +120,8 @@ Napi::Value LLM::generate(const Napi::CallbackInfo &info, bool async)
             std::string message = obj.Get("message").As<Napi::String>();
             prompt.push_back(MNN::Transformer::ChatMessage(role, message));
         }
-        std::thread executor([this, q, prompt]() {
-            llm_->response(prompt, new std::ostream(q.get()));
+        std::thread executor([this, q, prompt, max_token]() {
+            llm_->response(prompt, new std::ostream(q.get()), "", max_token);
 
             q->close();
         });
@@ -119,6 +141,7 @@ void LLM::Init(Napi::Env env, Napi::Object exports) {
         InstanceMethod("unload", &LLM::Unload),
         InstanceMethod("generate", &LLM::Generate),
         InstanceMethod("generateAsync", &LLM::GenerateAsync),
+        InstanceMethod("metrics", &LLM::Metrics),
     });
 
     exports.Set("LLM", func);

@@ -1,8 +1,8 @@
-import { LLM } from '../lib/index.js';
-import path from 'node:path';
 import os from 'node:os';
+import path from 'node:path';
+import { LLM } from '../lib/index.js';
 
-const model_dir = path.join(os.homedir(), ".llm/Qwen3-30B-A3B-Instruct-2507-MNN/");
+const model_dir = path.join(os.homedir(), ".llm/gpt-oss-20b-MNN/");
 
 async function testBenchmark() {
   const llm = new LLM();
@@ -14,10 +14,10 @@ async function testBenchmark() {
   let resp = '';
 
   for await (const v of gen) {
-    resp += v;
+    process.stdout.write(v)
   }
 
-  console.log(resp);
+  console.log(llm.metrics());
 
   llm.unload();
 }
@@ -43,10 +43,10 @@ function testChatMessages() {
   let resp = ''
 
   for (const v of gen) {
-    resp += v
+    process.stdout.write(v)
   }
 
-  console.log(resp);
+  console.log(llm.metrics());
 
   llm.unload();
 }
