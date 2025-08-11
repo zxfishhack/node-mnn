@@ -2,8 +2,22 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 import { LLM } from '../lib/index.js';
+import yargs from 'yargs';
 
-const model_dir = path.join(os.homedir(), ".llm/Qwen3-30B-A3B-Instruct-2507-MNN/");
+const argv = yargs(process.argv.slice(2))
+  .usage('Usage: $0 [options]')
+  .option('model_dir', {
+    alias: "m",
+    describe: 'model dir',
+    type: 'string',
+
+  })
+  .demandOption('model_dir')
+  .help('h')
+  .alias('h', 'help')
+  .argv;
+
+const model_dir = path.resolve(argv.model_dir + path.sep) + path.sep
 
 function benchmark() {
   const llm = new LLM();

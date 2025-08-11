@@ -1,8 +1,22 @@
 import os from 'node:os';
 import path from 'node:path';
 import { LLM } from '../lib/index.js';
+import yargs from 'yargs';
 
-const model_dir = path.join(os.homedir(), ".llm/gpt-oss-20b-MNN/");
+const argv = yargs(process.argv.slice(2))
+  .usage('Usage: $0 [options]')
+  .option('model_dir', {
+    alias: "m",
+    describe: 'model dir',
+    type: 'string',
+
+  })
+  .demandOption('model_dir')
+  .help('h')
+  .alias('h', 'help')
+  .argv;
+
+const model_dir = path.resolve(argv.model_dir + path.sep) + path.sep
 
 async function testBenchmark() {
   const llm = new LLM();

@@ -52,7 +52,10 @@ Napi::Value LLM::Load(const Napi::CallbackInfo &info)
       // 立即 return，让 JS 层看到这个异常
       return Napi::Boolean::New(info.Env(), false);
     }
-    llm_->set_config(std::string("{\"thread_num\": 16}"));
+    if (info.Length() >= 2 && info[1].IsString()) {
+        std::string config = info[1].As<Napi::String>();
+        llm_->set_config(config);
+    }
     llm_->load(); // 目前无法得知模型是否正确加载
     return Napi::Boolean::New(info.Env(), true);
 }
